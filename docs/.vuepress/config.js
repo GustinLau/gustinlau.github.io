@@ -1,5 +1,4 @@
-// const baiduCode = require('./config/baiduCode.js'); // 百度统计hm码
-const htmlModules = require('./config/htmlModules.js')
+const nav = require('./nav')
 const { resolve } = require('path')
 
 const config = {
@@ -12,28 +11,13 @@ const config = {
       description: '我的个人博客。'
     }
   },
+  dest: 'dist',
   // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
   // base: '/',
   // 主题配置
   themeConfig: {
     // 导航配置
-    nav: [
-      { text: '首页', link: '/' },
-      {
-        text: 'LeetCode',
-        link: '/leetcode/'
-      },
-      { text: '关于', link: '/about/' },
-      {
-        text: '索引',
-        link: '/archives/',
-        items: [
-          { text: '分类', link: '/categories/' },
-          { text: '标签', link: '/tags/' },
-          { text: '归档', link: '/archives/' }
-        ]
-      }
-    ],
+    nav,
     // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     sidebarDepth: 2,
     // 导航栏logo
@@ -130,9 +114,7 @@ const config = {
       createYear: 2022,
       // 博客版权信息，支持a标签或换行标签</br>
       copyrightInfo: 'Gustin Lau'
-    },
-    // 自定义hmtl(广告)模块
-    htmlModules
+    }
   },
   // 注入到页面<head>中的标签，格式[tagName, { attrName: attrValue }, innerHTML?]
   head: [
@@ -316,7 +298,7 @@ const config = {
   },
 
   // 监听文件变化并重新构建
-  extraWatchFiles: ['.vuepress/config.ts', '.vuepress/config/htmlModules.ts']
+  extraWatchFiles: ['.vuepress/config.js']
 }
 
 module.exports = config
