@@ -55,7 +55,7 @@ export default {
 <style lang='stylus'>
 // $mobileSidebarWidth = $sidebarWidth * 0.82
 .footer
-  font-family serif
+  font-family serif, revert
   padding 5rem 1.5rem 1.5rem
   text-align center
   color var(--textColor)
