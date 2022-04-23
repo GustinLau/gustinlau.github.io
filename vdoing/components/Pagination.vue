@@ -5,96 +5,29 @@
       :class="{disabled: currentPage === 1}"
       @click="goPrex()"
     >
-      <span>上一页</span>
     </span>
-
-    <!-- 分页在5页及以下时 -->
-    <div
-      class="pagination-list"
-      v-if="pages <= 5"
-    >
+    <div class="pagination-list">
+      <span class="card-box" :class="{active: currentPage === 1}" @click="goIndex(1)">1</span>
+      <span v-if="totalPages > 5 && currentPage > 3" class="ellipsis ell-two" @click="goIndex(showPages[0]-1)"></span>
       <span
         class="card-box"
-        v-for="item in pages"
+        v-for="item in showPages"
         :key="item"
         :class="{active: currentPage === item}"
         @click="goIndex(item)"
       >
         {{ item }}
       </span>
+      <span v-if="totalPages > 5 && currentPage < totalPages - 2" class="ellipsis ell-four"
+            @click="goIndex(showPages[showPages.length - 1]+1)"></span>
+      <span v-if="totalPages>1" class="card-box" :class="{active: currentPage === totalPages}"
+            @click="goIndex(totalPages)">{{ totalPages }}</span>
     </div>
-    <!-- 分页在5页以上 -->
-    <div
-      class="pagination-list"
-      v-else
-    >
-      <!-- 一号位 -->
-      <span
-        class="card-box"
-        :class="{active: currentPage === 1}"
-        @click="goIndex(1)"
-      >
-        1
-      </span>
-
-      <!-- 二号位 -->
-      <span
-        class="ellipsis ell-two"
-        v-show="currentPage > 3"
-        @click="goIndex(currentPage - 2)"
-        title="上两页"
-      />
-      <!--这里没有使用v-if的原因是因为部署版本在当前页大于3时刷新页面出现了一些bug-->
-      <span
-        class="card-box"
-        v-show="currentPage <= 3"
-        :class="{active: currentPage === 2}"
-        @click="goIndex(2)"
-      >
-        2
-      </span>
-
-      <!-- 三号位 -->
-      <span
-        class="card-box"
-        :class="{active: currentPage >= 3 && currentPage <= (pages - 2)}"
-        @click="goIndex(threeNum())"
-      >
-        {{ threeNum() }}
-      </span>
-
-      <!-- 四号位 -->
-      <span
-        class="ellipsis ell-four"
-        v-show="currentPage < (pages - 2)"
-        @click="goIndex(currentPage + 2)"
-        title="下两页"
-      />
-      <span
-        class="card-box"
-        v-show="currentPage >= (pages - 2)"
-        :class="{active: currentPage === pages-1}"
-        @click="goIndex(pages-1)"
-      >
-        {{ pages - 1 }}
-      </span>
-
-      <!-- 五号位 -->
-      <span
-        class="card-box"
-        :class="{active: currentPage === pages}"
-        @click="goIndex(pages)"
-      >
-        {{ pages }}
-      </span>
-    </div>
-
     <span
       class="card-box next iconfont icon-jiantou-you"
-      :class="{disabled: currentPage === pages}"
+      :class="{disabled: currentPage === totalPages}"
       @click="goNext()"
     >
-      <span>下一页</span>
     </span>
   </div>
 </template>
@@ -116,15 +49,45 @@ export default {
     }
   },
   computed: {
-    pages() { // 总页数
+    totalPages() { // 总页数
       return Math.ceil(this.total / this.perPage)
-    }
+    },
+    showPages() {
+      const arr = []
+      if (this.totalPages <= 5) {
+        for (let i = 2; i < this.totalPages; i++) {
+          arr.push(i)
+        }
+        return arr
+      }
+      let start = this.currentPage - 1
+      for (let i = Math.max(2, start); i <= Math.min(this.currentPage + 1, this.totalPages - 1); i++) {
+        arr.push(i)
+      }
+      if (this.currentPage < 3) {
+        if (this.currentPage === 1 && this.totalPages > 3) {
+          arr.push(3)
+        }
+        if (this.totalPages > 4) {
+          arr.push(4)
+        }
+      }
+      if (this.currentPage > this.totalPages - 2) {
+        if (arr[0] > this.totalPages - 2) {
+          arr.unshift(this.totalPages - 2)
+        }
+        if (arr[0] > this.totalPages - 3) {
+          arr.unshift(this.totalPages - 3)
+        }
+      }
+      return arr
+    },
   },
   methods: {
     threeNum() { // 三号位页码计算
       let num = 3
       const currentPage = this.currentPage
-      const pages = this.pages
+      const pages = this.totalPages
       if (currentPage < 3) {
         num = 3
       } else if (currentPage > (pages - 3)) {
@@ -142,7 +105,7 @@ export default {
     },
     goNext() {
       let currentPage = this.currentPage
-      if (currentPage < this.pages) {
+      if (currentPage < this.totalPages) {
         this.handleEmit(++currentPage)
       }
     },
@@ -192,7 +155,7 @@ export default {
   > span
     position absolute
     top 0
-    padding 1rem 1.2rem
+    padding 1rem
     font-size 0.95rem
 
     &.disabled
@@ -200,6 +163,7 @@ export default {
 
     &.prev
       left 0
+
       &::before
         float left
         margin-right 0.3rem
@@ -231,7 +195,7 @@ export default {
 @media (max-width 800px)
   .pagination
     > span
-      padding 1rem 1.5rem
+      padding 1rem
 
       p
         display none
@@ -240,7 +204,7 @@ export default {
 @media (max-width $MQMobile)
   .pagination
     > span // 左右按钮
-      padding 0.9rem 1.5rem
+      padding 0.9rem
 
     .pagination-list
       span
@@ -252,7 +216,7 @@ export default {
 @media (max-width 390px)
   .pagination
     > span // 左右按钮
-      padding 0.8rem 1.3rem
+      padding 0.8rem
 
     .pagination-list
       span

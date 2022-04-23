@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 import DropdownLink from '@theme/components/DropdownLink.vue'
 import {resolveNavLinkItem} from '../util'
 import NavLink from '@theme/components/NavLink.vue'
@@ -79,11 +80,18 @@ export default {
     },
 
     userLinks() {
-      return (this.nav || []).map(link => {
-        return Object.assign(resolveNavLinkItem(link), {
-          items: (link.items || []).map(resolveNavLinkItem)
+      return (this.nav || [])
+        .filter(link => {
+          if (link.type === 'mirror') {
+            return location.origin !== new URL(link.link).origin
+          }
+          return true
         })
-      })
+        .map(link => {
+          return Object.assign(resolveNavLinkItem(link), {
+            items: (link.items || []).map(resolveNavLinkItem)
+          })
+        })
     },
 
     repoLink() {

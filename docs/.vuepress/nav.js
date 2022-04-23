@@ -5,6 +5,7 @@ const nav = [
     link: '/leetcode/'
   },
   { text: '关于', link: '/about/' },
+  // { text: '国内站点', type: 'mirror', link: 'http://127.0.0.1:8081' },
   {
     text: '索引',
     link: '/archives/',

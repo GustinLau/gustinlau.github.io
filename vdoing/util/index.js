@@ -4,9 +4,7 @@ export const endingSlashRE = /\/$/
 export const outboundRE = /^[a-z]+:/i
 
 export function normalize(path) {
-  return decodeURI(path)
-    .replace(hashRE, '')
-    .replace(extRE, '')
+  return decodeURI(path).replace(hashRE, '').replace(extRE, '')
 }
 
 export function getHash(path) {
@@ -123,10 +121,8 @@ function resolvePath(relative, base, append) {
  * @returns { SidebarGroup }
  */
 export function resolveSidebarItems(page, regularPath, site, localePath) {
-  const {pages, themeConfig} = site
-  const localeConfig = localePath && themeConfig.locales
-    ? themeConfig.locales[localePath] || themeConfig
-    : themeConfig
+  const { pages, themeConfig } = site
+  const localeConfig = localePath && themeConfig.locales ? themeConfig.locales[localePath] || themeConfig : themeConfig
 
   const pageSidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (pageSidebarConfig === 'auto') {
@@ -137,13 +133,11 @@ export function resolveSidebarItems(page, regularPath, site, localePath) {
   if (!sidebarConfig) {
     return []
   } else {
-    const {base, config} = resolveMatchingConfig(regularPath, sidebarConfig)
+    const { base, config } = resolveMatchingConfig(regularPath, sidebarConfig)
     if (config === 'auto') {
       return resolveHeaders(page)
     }
-    return config
-      ? config.map(item => resolveItem(item, pages, base))
-      : []
+    return config ? config.map((item) => resolveItem(item, pages, base)) : []
   }
 }
 
@@ -153,38 +147,40 @@ export function resolveSidebarItems(page, regularPath, site, localePath) {
  */
 function resolveHeaders(page) {
   const headers = groupHeaders(page.headers || [])
-  return [{
-    type: 'group',
-    collapsable: false,
-    title: page.title,
-    path: null,
-    children: headers.map(h => ({
-      type: 'auto',
-      title: h.title,
-      basePath: page.path,
-      path: page.path + '#' + h.slug,
-      children: h.children || []
-    }))
-  }]
+  return [
+    {
+      type: 'group',
+      collapsable: false,
+      title: page.title,
+      path: null,
+      children: headers.map((h) => ({
+        type: 'auto',
+        title: h.title,
+        basePath: page.path,
+        path: page.path + '#' + h.slug,
+        children: h.children || []
+      }))
+    }
+  ]
 }
 
 export function groupHeaders(headers) {
   // group h3s under h2
-  headers = headers.map(h => Object.assign({}, h))
+  headers = headers.map((h) => Object.assign({}, h))
   let lastH2
-  headers.forEach(h => {
+  headers.forEach((h) => {
     if (h.level === 2) {
       lastH2 = h
     } else if (lastH2) {
-      (lastH2.children || (lastH2.children = [])).push(h)
+      ;(lastH2.children || (lastH2.children = [])).push(h)
     }
   })
-  return headers.filter(h => h.level === 2)
+  return headers.filter((h) => h.level === 2)
 }
 
 export function resolveNavLinkItem(linkItem) {
   return Object.assign(linkItem, {
-    type: linkItem.items && linkItem.items.length ? 'links' : 'link'
+    type: linkItem.type ? linkItem.type : linkItem.items && linkItem.items.length ? 'links' : 'link'
   })
 }
 
@@ -212,13 +208,10 @@ export function resolveMatchingConfig(regularPath, config) {
 }
 
 function ensureEndingSlash(path) {
-  return /(\.html|\/)$/.test(path)
-    ? path
-    : path + '/'
+  return /(\.html|\/)$/.test(path) ? path : path + '/'
 }
 
 function resolveItem(item, pages, base, groupDepth = 1) {
-
   if (typeof item === 'string') {
     return resolvePage(pages, item, base)
   } else if (Array.isArray(item)) {
@@ -227,9 +220,7 @@ function resolveItem(item, pages, base, groupDepth = 1) {
     })
   } else {
     if (groupDepth > 3) {
-      console.error(
-        '[vuepress] detected a too deep nested sidebar group.'
-      )
+      console.error('[vuepress] detected a too deep nested sidebar group.')
     }
     const children = item.children || []
     if (children.length === 0 && item.path) {
@@ -243,12 +234,11 @@ function resolveItem(item, pages, base, groupDepth = 1) {
       title: item.title,
       sidebarDepth: item.sidebarDepth,
       initialOpenGroupIndex: item.initialOpenGroupIndex,
-      children: children.map(child => resolveItem(child, pages, base, groupDepth + 1)),
+      children: children.map((child) => resolveItem(child, pages, base, groupDepth + 1)),
       collapsable: item.collapsable !== false
     }
   }
 }
-
 
 // 类型判断
 export function type(o) {
@@ -273,7 +263,8 @@ export function zero(d) {
 export function getTimeNum(post) {
   let dateStr = post.frontmatter.date || post.lastUpdated || new Date()
   let date = new Date(dateStr)
-  if (date == "Invalid Date" && dateStr) { // 修复new Date()在Safari下出现Invalid Date的问题
+  if (date == 'Invalid Date' && dateStr) {
+    // 修复new Date()在Safari下出现Invalid Date的问题
     date = new Date(dateStr.replace(/-/g, '/'))
   }
   return date.getTime()

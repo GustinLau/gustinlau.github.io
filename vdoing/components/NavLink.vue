@@ -17,7 +17,7 @@
     :rel="isMailto(link) || isTel(link) ? null : 'noopener noreferrer'"
   >
     {{ item.text }}
-    <OutboundLink/>
+    <OutboundLink class="link-icon"/>
   </a>
 </template>
 
@@ -54,3 +54,13 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.link-icon
+  ::v-deep
+    svg
+      width 12px
+      height 12px
+      vertical-align unset
+
+</style>
