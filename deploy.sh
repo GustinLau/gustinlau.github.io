@@ -26,7 +26,7 @@ if [ -n "$GITEE_TOKEN" ]; then
   git config --global user.email "gustinlau@gmail.com"
 fi
 
-git init
+git init -b main
 git add -A
 git commit -m "${msg}"
 git push -f $githubUrl main:pages # 推送到github pages分支
