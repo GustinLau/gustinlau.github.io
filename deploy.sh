@@ -12,19 +12,24 @@ cd dist
 # deploy to github pages
 # echo 'xxx.com' > CNAME
 
-if [ -z "$GITHUB_TOKEN" ]; then
-  msg='deploy'
-  githubUrl=git@github.com:xugaoyi/vuepress-theme-vdoing.git
-else
+if [ -n "$GITHUB_TOKEN" ]; then
   msg='来自github actions的自动部署'
-  githubUrl=https://xugaoyi:${GITHUB_TOKEN}@github.com/xugaoyi/vuepress-theme-vdoing.git
-  git config --global user.name "xugaoyi"
-  git config --global user.email "894072666@qq.com"
+  githubUrl=https://GustinLau:${GITHUB_TOKEN}@github.com/GustinLau/gustinlau.github.io.git
+  git config --global user.name "GustinLau"
+  git config --global user.email "gustinlau@gmail.com"
 fi
+
+if [ -n "$GITEE_TOKEN" ]; then
+  msg='来自github actions的自动部署'
+  giteeUrl=https://GustinLau:${GITEE_TOKEN}@gitee.com/GustinLau/gustinlau.git
+  git config --global user.name "GustinLau"
+  git config --global user.email "gustinlau@gmail.com"
+fi
+
 git init
 git add -A
 git commit -m "${msg}"
-git push -f $githubUrl master:gh-pages # 推送到github gh-pages分支
+git push -f $githubUrl main:pages # 推送到github pages分支
 
 cd -
 rm -rf dist
