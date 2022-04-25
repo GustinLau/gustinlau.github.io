@@ -18,22 +18,7 @@
       :items="sidebarItems"
       @toggle-sidebar="toggleSidebar"
       v-show="showSidebar"
-    >
-      <template #top v-if="sidebarSlotTop">
-        <div
-          class="sidebar-slot sidebar-slot-top"
-          v-html="sidebarSlotTop"
-        ></div>
-      </template>
-      <template #bottom v-if="sidebarSlotBottom">
-        <div
-          class="sidebar-slot sidebar-slot-bottom"
-          v-html="sidebarSlotBottom"
-        ></div>
-      </template>
-      <!-- <slot name="sidebar-top" #top />
-      <slot name="sidebar-bottom" #bottom /> -->
-    </Sidebar>
+    />
 
     <!-- 首页 -->
     <Home v-if="$page.frontmatter.home"/>
@@ -48,22 +33,7 @@
     <ArchivesPage v-else-if="$page.frontmatter.archivesPage"/>
 
     <!-- 文章页或其他页 -->
-    <Page v-else :sidebar-items="sidebarItems">
-      <template #top v-if="pageSlotTop">
-        <div class="page-slot page-slot-top" v-html="pageSlotTop"></div>
-      </template>
-      <template #bottom v-if="pageSlotBottom">
-        <div class="page-slot page-slot-bottom" v-html="pageSlotBottom"></div>
-      </template>
-      <!-- <slot
-        name="page-top"
-        #top
-      />
-      <slot
-        name="page-bottom"
-        #bottom
-      /> -->
-    </Page>
+    <Page v-else :sidebar-items="sidebarItems"/>
 
     <Footer/>
 
@@ -71,27 +41,6 @@
 
     <BodyBgImg v-if="$themeConfig.bodyBgImg"/>
 
-    <!-- 自定义html插入左右下角的小窗口 -->
-    <div
-      class="custom-html-window custom-html-window-lb"
-      v-if="windowLB"
-      v-show="showWindowLB"
-    >
-      <div class="custom-wrapper">
-        <span class="close-but" @click="showWindowLB = false">×</span>
-        <div v-html="windowLB"/>
-      </div>
-    </div>
-    <div
-      class="custom-html-window custom-html-window-rb"
-      v-if="windowRB"
-      v-show="showWindowRB"
-    >
-      <div class="custom-wrapper">
-        <span class="close-but" @click="showWindowRB = false">×</span>
-        <div v-html="windowRB"/>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -121,30 +70,10 @@ export default {
       hideNavbar: false,
       isSidebarOpen: true,
       showSidebar: false,
-      themeMode: 'light',
-      showWindowLB: true,
-      showWindowRB: true
+      themeMode: 'light'
     }
   },
   computed: {
-    sidebarSlotTop() {
-      return this.getHtmlStr('sidebarT')
-    },
-    sidebarSlotBottom() {
-      return this.getHtmlStr('sidebarB')
-    },
-    pageSlotTop() {
-      return this.getHtmlStr('pageT')
-    },
-    pageSlotBottom() {
-      return this.getHtmlStr('pageB')
-    },
-    windowLB() {
-      return this.getHtmlStr('windowLB')
-    },
-    windowRB() {
-      return this.getHtmlStr('windowRB')
-    },
     showRightMenu() {
       const {headers} = this.$page
       return (
@@ -278,10 +207,6 @@ export default {
     }
   },
   methods: {
-    getHtmlStr(module) {
-      const {htmlModules} = this.$themeConfig
-      return htmlModules ? htmlModules[module] : ''
-    },
     setBodyClass() {
       document.body.className = 'theme-mode-' + this.themeMode
     },

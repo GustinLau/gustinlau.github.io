@@ -1,35 +1,39 @@
 name: CI
 
-#on: [push]
-
-# 在master分支发生push事件时触发。
 on:
+  # 在master分支发生push事件时触发。
   push:
     branches:
       - main
-
+  # 手动触发构建
   workflow_dispatch:
-  
-env: # 设置环境变量
-  TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
+    
+# 设置环境变量  
+env:
+  # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
+  TZ: Asia/Shanghai 
 
 jobs:
-  build: # 自定义名称
-    runs-on: ubuntu-latest # 运行在虚拟机环境ubuntu-latest
+  build:
+    # 运行在虚拟机环境ubuntu-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [12.x]
 
     steps:
-      - name: Checkout # 步骤1
-        uses: actions/checkout@v3 # 作用：检出仓库，获取源码
-      - name: Use Node.js ${{ matrix.node-version }} # 步骤2
-        uses: actions/setup-node@v1 # 作用：安装nodejs
+      # 步骤1 检出仓库，获取源码
+      - name: Checkout 
+        uses: actions/checkout@v3
+      # 步骤2 安装NodeJS
+      - name: Setup NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }} # 版本
-      - name: run deploy.sh # 步骤3
-        env: # 设置环境变量
+          node-version: ${{ matrix.node-version }}
+      # 步骤3 运行部署脚本
+      - name: Run Deploy Shell
+        env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN_4_GITHUB }} 
           GITEE_TOKEN: ${{ secrets.DEPLOY_TOKEN_4_GITEE }}
         run: npm install && npm run deploy

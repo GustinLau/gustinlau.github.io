@@ -29,7 +29,16 @@ fi
 git init -b main
 git add -A
 git commit -m "${msg}"
-git push -f $githubUrl main:pages # 推送到github pages分支
+
+if [ -n "$GITHUB_TOKEN" ]; then
+  # 推送到github pages分支
+  git push -f $githubUrl main:pages
+fi
+
+if [ -n "$GITEE_TOKEN" ]; then
+   # 推送到github pages分支
+   git push -f $giteeUrl main:pages
+fi
 
 cd -
 rm -rf dist

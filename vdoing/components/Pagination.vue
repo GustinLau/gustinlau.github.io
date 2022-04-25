@@ -84,19 +84,6 @@ export default {
     },
   },
   methods: {
-    threeNum() { // 三号位页码计算
-      let num = 3
-      const currentPage = this.currentPage
-      const pages = this.totalPages
-      if (currentPage < 3) {
-        num = 3
-      } else if (currentPage > (pages - 3)) {
-        num = pages - 2
-      } else {
-        num = currentPage
-      }
-      return num
-    },
     goPrex() {
       let currentPage = this.currentPage
       if (currentPage > 1) {
