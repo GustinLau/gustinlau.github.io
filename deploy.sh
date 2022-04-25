@@ -21,23 +21,23 @@ fi
 
 if [ -n "$GITEE_TOKEN" ]; then
   msg='来自github actions的自动部署'
-  giteeUrl=https://GustinLau:${GITEE_TOKEN}@gitee.com/GustinLau/gustinlau.git
+  giteeUrl=https://gustinlau:${GITEE_TOKEN}@gitee.com/GustinLau/gustinlau.git
   git config --global user.name "GustinLau"
   git config --global user.email "gustinlau@gmail.com"
 fi
 
-git init -b main
+git init
 git add -A
 git commit -m "${msg}"
 
 if [ -n "$GITHUB_TOKEN" ]; then
   # 推送到github pages分支
-  git push -f $githubUrl main:pages
+  git push -f $githubUrl master:pages
 fi
 
 if [ -n "$GITEE_TOKEN" ]; then
    # 推送到github pages分支
-   git push -f $giteeUrl main:pages
+   git push -f $giteeUrl master:pages
 fi
 
 cd -
