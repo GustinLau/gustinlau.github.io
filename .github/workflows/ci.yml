@@ -4,7 +4,7 @@ on:
   # 在master分支发生push事件时触发。
   push:
     branches:
-      - main
+      - disabled
   # 手动触发构建
   workflow_dispatch:
     

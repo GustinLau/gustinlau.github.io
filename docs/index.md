@@ -1,6 +1,6 @@
 ---
 home: true
-# heroImage: /img/img.png
+# heroImage: /svg/logo.svg
 # heroText: Evan's blog
 # actionText: 立刻进入 →
 # actionLink: /web/
@@ -15,4 +15,3 @@ home: true
 # 提示：如发现文本颜色不适应你的背景时可以到palette.styl修改$bannerTextColor变量
 bannerBg: /img/bg.jpg
 ---
-

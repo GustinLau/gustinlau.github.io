@@ -21,7 +21,7 @@ const config = {
     // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     sidebarDepth: 2,
     // 导航栏logo
-    logo: '/img/logo.png',
+    logo: '/svg/logo.svg',
     // 导航栏右侧生成Github链接
     // repo: 'gustinlau',
     // 搜索结果显示最大数
@@ -219,8 +219,8 @@ const config = {
     //   {
     //     choosen: 'gitalk',
     //     options: {
-    //       // clientID: '0067b074980ccb97110c',
-    //       // clientSecret: '2e6cf0f7a0528d62e4acf36e16f8bef42d9a3fa3',
+    //       // clientID: '',
+    //       // clientSecret: '',
     //       // GitHub 仓库
     //       repo: 'blog-gitalk-comment',
     //       // GitHub仓库所有者

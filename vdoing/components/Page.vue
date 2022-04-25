@@ -38,7 +38,7 @@
           <Content class="theme-vdoing-content"/>
         </div>
         <PageEdit/>
-        <PageNav v-bind="{ sidebarItems }"/>
+        <PageNav v-if="!hidePageNav" v-bind="{ sidebarItems }"/>
       </div>
 
       <UpdateArticle
@@ -99,6 +99,9 @@ export default {
     pageComponent() {
       return this.$frontmatter.pageComponent ? this.$frontmatter.pageComponent.name : false
     },
+    hidePageNav(){
+      return this.$frontmatter.hidePageNav === true
+    }
   },
   methods: {
     isArticle() {
