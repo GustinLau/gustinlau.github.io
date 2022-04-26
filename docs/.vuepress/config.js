@@ -298,7 +298,23 @@ const config = {
   },
 
   // 监听文件变化并重新构建
-  extraWatchFiles: ['.vuepress/config.js']
+  extraWatchFiles: ['.vuepress/config.js'],
+
+  chainWebpack: (config, isServer) => {
+    config.module.rule('svg').exclude.add(resolve(__dirname, './public/icons')).end()
+    // config 是 ChainableConfig 的一个实例
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve(__dirname, './public/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+  }
 }
 
 module.exports = config

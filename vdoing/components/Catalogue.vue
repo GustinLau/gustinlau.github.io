@@ -8,68 +8,76 @@
       </dl>
     </div>
     <div class="catalogue-wrapper" v-if="isStructuring">
-      <div class="catalogue-title">目录</div>
-      <div class="catalogue-content">
-        <template v-for="(item, index) in getCatalogueList()">
-          <dl v-if="type(item) === 'array'" :key="index" class="inline">
-            <dt>
-              <router-link :to="item[2]">
-                {{ pageData.num !== false ? `${index + 1}. ${item[1]}` : item[1] }}
-                <span class="title-tag" v-if="item[3]">
+      <template v-if="catalogueList.length > 0">
+        <div class="catalogue-title">目录</div>
+        <div class="catalogue-content">
+          <template v-for="(item, index) in catalogueList">
+            <dl v-if="type(item) === 'array'" :key="index" class="inline">
+              <dt>
+                <router-link :to="item[2]">
+                  {{ pageData.num !== false ? `${index + 1}. ${item[1]}` : item[1] }}
+                  <span class="title-tag" v-if="item[3]">
                   {{ item[3] }}
                 </span>
-              </router-link>
-            </dt>
-          </dl>
-          <dl v-else-if="type(item) === 'object'" :key="index">
-            <!-- 一级目录 -->
-            <dt :id="(anchorText = item.title)">
-              <a :href="`#${anchorText}`" class="header-anchor">#</a>
-              {{ pageData.num !== false ? `${index + 1}. ${item.title}` : item.title }}
-            </dt>
-            <dd>
-              <!-- 二级目录 -->
-              <template v-for="(c, i) in item.children">
-                <template v-if="type(c) === 'array'">
-                  <router-link :to="c[2]" :key="i">
-                    {{ pageData.num !== false ? `${index + 1}-${i + 1}. ${c[1]}` : c[1] }}
-                    <span class="title-tag" v-if="c[3]">
+                </router-link>
+              </dt>
+            </dl>
+            <dl v-else-if="type(item) === 'object'" :key="index">
+              <!-- 一级目录 -->
+              <dt :id="(anchorText = item.title)">
+                <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                {{ pageData.num !== false ? `${index + 1}. ${item.title}` : item.title }}
+              </dt>
+              <dd>
+                <!-- 二级目录 -->
+                <template v-for="(c, i) in item.children">
+                  <template v-if="type(c) === 'array'">
+                    <router-link :to="c[2]" :key="i">
+                      {{ pageData.num !== false ? `${index + 1}-${i + 1}. ${c[1]}` : c[1] }}
+                      <span class="title-tag" v-if="c[3]">
                       {{ c[3] }}
                     </span>
-                  </router-link>
-                </template>
-                <!-- 三级目录 -->
-                <div
-                  v-else-if="type(c) === 'object'"
-                  :key="i"
-                  class="sub-cat-wrap"
-                >
-                  <div :id="(anchorText = c.title)" class="sub-title">
-                    <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                    {{ pageData.num !== false ? `${index + 1}-${i + 1}. ${c.title}` : c.title }}
-                  </div>
-                  <router-link
-                    v-for="(cc, ii) in c.children"
-                    :to="cc[2]"
-                    :key="`${index + 1}-${i + 1}-${ii + 1}`"
+                    </router-link>
+                  </template>
+                  <!-- 三级目录 -->
+                  <div
+                    v-else-if="type(c) === 'object'"
+                    :key="i"
+                    class="sub-cat-wrap"
                   >
-                    {{ pageData.num !== false ? `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` : cc[1] }}
-                    <span class="title-tag" v-if="cc[3]">
+                    <div :id="(anchorText = c.title)" class="sub-title">
+                      <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                      {{ pageData.num !== false ? `${index + 1}-${i + 1}. ${c.title}` : c.title }}
+                    </div>
+                    <router-link
+                      v-for="(cc, ii) in c.children"
+                      :to="cc[2]"
+                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
+                    >
+                      {{ pageData.num !== false ? `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` : cc[1] }}
+                      <span class="title-tag" v-if="cc[3]">
                       {{ cc[3] }}
                     </span>
-                  </router-link>
-                </div>
-              </template>
-            </dd>
-          </dl>
-        </template>
-      </div>
+                    </router-link>
+                  </div>
+                </template>
+              </dd>
+            </dl>
+          </template>
+        </div>
+      </template>
+      <template v-else>
+        <SvgIcon icon-class="empty" class-name="empty-icon"/>
+        <p class="empty-text">暂无文章</p>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import SvgIcon from "./SvgIcon";
 export default {
+  components: {SvgIcon},
   data() {
     return {
       pageData: null,
@@ -85,19 +93,9 @@ export default {
       console.error("目录页数据依赖于结构化的侧边栏数据，请在主题设置中将侧边栏字段设置为'structuring'，否则无法获取目录数据。")
     }
   },
-  methods: {
-    getPageData() {
-      const pageComponent = this.$frontmatter.pageComponent
-      if (pageComponent && pageComponent.data) {
-        this.pageData = {
-          ...pageComponent.data,
-          title: this.$frontmatter.title
-        }
-      } else {
-        console.error('请在front matter中设置pageComponent和pageComponent.data数据')
-      }
-    },
-    getCatalogueList() {
+  computed:{
+    empty:()=>empty,
+    catalogueList() {
       const {sidebar} = this.$site.themeConfig
       const {data} = this.$frontmatter.pageComponent
       const key = data.path || data.key
@@ -110,8 +108,22 @@ export default {
       }
       if (!catalogueList) {
         console.warn('未获取到目录数据，请查看front matter中设置的path是否正确。')
+        catalogueList=[]
       }
       return catalogueList
+    }
+  },
+  methods: {
+    getPageData() {
+      const pageComponent = this.$frontmatter.pageComponent
+      if (pageComponent && pageComponent.data) {
+        this.pageData = {
+          ...pageComponent.data,
+          title: this.$frontmatter.title
+        }
+      } else {
+        console.error('请在front matter中设置pageComponent和pageComponent.data数据')
+      }
     },
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
@@ -192,7 +204,15 @@ dl, dd
   .catalogue-title
     font-size 1.45rem
     margin 2rem 0
-
+  .empty-icon
+    display block
+    height auto
+    color var(--textColor)
+    width 50%
+    margin 3rem auto 1.5rem auto
+  .empty-text
+    color var(--textColor)
+    text-align center
   .catalogue-content
     dl
       margin-bottom 1.8rem
