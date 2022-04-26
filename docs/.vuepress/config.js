@@ -21,7 +21,7 @@ const config = {
     // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     sidebarDepth: 2,
     // 导航栏logo
-    logo: '/svg/logo.svg',
+    logo: '/svg/star.svg',
     // 导航栏右侧生成Github链接
     // repo: 'gustinlau',
     // 搜索结果显示最大数

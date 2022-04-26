@@ -12,7 +12,7 @@
           v-for="(item, i) in headers"
           :key="i"
         >
-          <a :href="'#' + item.slug">{{ item.title }}</a>
+          <a :href="'#' + item.slug">{{ clean(item.title) }}</a>
         </div>
       </div>
     </div>
@@ -43,6 +43,9 @@ export default {
     },
     getHashText() {
       this.hashText = decodeURIComponent(window.location.hash.slice(1))
+    },
+    clean(str){
+      return str.replace(/\[\^.+]/,'').trim()
     }
   }
 }
