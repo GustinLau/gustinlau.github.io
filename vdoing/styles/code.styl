@@ -37,7 +37,7 @@ body {$contentClass}
 body {$contentClass}
   pre, pre[class*="language-"]
     line-height 1.4
-    padding .5rem .75rem
+    padding 2.3rem .75rem .5rem .75rem
     margin 0.85rem 0
     background-color $codeBgColor
     border-radius 3px
@@ -57,7 +57,15 @@ div[class*="language-"]
   .code-copy
     top 0.8em !important
     line-height 14px !important
-    right 38px !important
+    right .75rem !important
+    color rgba(150,150,150,0.7) !important
+    &::after
+      content 'Copy'
+      font-size 0.8rem
+      line-height 14px
+      vertical-align top
+      font-style normal
+      padding-left 4px
 
   .highlight-lines
     user-select none
@@ -79,8 +87,8 @@ div[class*="language-"]
     position absolute
     z-index 3
     top 0.8em
-    right 1em
-    font-size 0.8rem
+    left .75rem
+    font-size 0.875rem
     color rgba(150, 150, 150, .7)
 
   // color rgba(255, 255, 255, 0.4)
@@ -147,13 +155,17 @@ for lang in $codeLang
     &:before
       content ('' + lang)
 
+div[class~="language-plaintext"]
+  &:before
+    content "text"
+
 div[class~="language-javascript"]
   &:before
-    content "js"
+    content "javascript"
 
 div[class~="language-typescript"]
   &:before
-    content "ts"
+    content "typescript"
 
 div[class~="language-markup"]
   &:before
@@ -161,19 +173,19 @@ div[class~="language-markup"]
 
 div[class~="language-markdown"]
   &:before
-    content "md"
+    content "markdown"
 
 div[class~="language-json"]:before
   content "json"
 
 div[class~="language-ruby"]:before
-  content "rb"
+  content "ruby"
 
 div[class~="language-python"]:before
-  content "py"
+  content "python"
 
 div[class~="language-bash"]:before
-  content "sh"
+  content "bash"
 
 div[class~="language-php"]:before
   content "php"
