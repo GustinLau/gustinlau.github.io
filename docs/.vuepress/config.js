@@ -2,8 +2,11 @@ const nav = require('./nav')
 const { resolve } = require('path')
 
 const config = {
-  // 使用本地主题
-  theme: resolve(__dirname, '../../vdoing'),
+  // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
+  base: '/',
+  // 输出目录
+  dest: 'dist',
+  // 多语言支持的语言配置
   locales: {
     '/': {
       lang: 'zh-CN',
@@ -11,9 +14,9 @@ const config = {
       description: '我的个人博客。'
     }
   },
-  dest: 'dist',
-  // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
-  // base: '/',
+  patterns: process.env.NODE_ENV === 'production' ? ['**/*.md', '**/*.vue', '!**/*.draft.md'] : ['**/*.md', '**/*.vue'],
+  // 主题
+  theme: resolve(__dirname, '../../vdoing'),
   // 主题配置
   themeConfig: {
     // 导航配置
@@ -292,14 +295,13 @@ const config = {
     //   },
     // ],
   ],
-
+  // markdown配置
   markdown: {
     extractHeaders: ['h2', 'h3', 'h4', 'h5', 'h6'] // 提取标题到侧边栏的级别，默认['h2', 'h3']
   },
-
   // 监听文件变化并重新构建
   extraWatchFiles: ['.vuepress/config.js'],
-
+  // Webpack 配置
   chainWebpack: (config, isServer) => {
     config.module.rule('svg').exclude.add(resolve(__dirname, './public/icons')).end()
     // config 是 ChainableConfig 的一个实例
