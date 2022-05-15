@@ -118,7 +118,7 @@ function mapTocToSidebar(root, collapsable, prefix = '', flat = false) {
     if (
       filename === '.DS_Store' ||
       filename.toLowerCase() === 'index.md' ||
-      filename.toLowerCase().endsWith('.draft.md')
+      (process.env.NODE_ENV === 'production' && filename.toLowerCase().endsWith('.draft.md'))
     ) {
       // 过滤.DS_Store文件
       return
