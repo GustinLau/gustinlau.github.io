@@ -172,7 +172,13 @@ function mapTocToSidebar(root, collapsable, prefix = '', flat = false) {
         sidebar.set(order, {
           title,
           collapsable, // 是否可折叠，默认true
-          children: mapTocToSidebar(file, collapsable, prefix + filename + '/').sidebar // 子栏路径添加前缀
+          children: mapTocToSidebar(file, collapsable, prefix + filename + '/').sidebar.map((value) => {
+            if (typeof value[0] === 'number') {
+              return value.slice(1)
+            } else {
+              return value
+            }
+          }) // 子栏路径添加前缀
         })
       }
     } else {
