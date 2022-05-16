@@ -184,7 +184,8 @@ const config = {
         // 排除class是no-zoom的图片
         selector: '.theme-vdoing-content img:not(.no-zoom)',
         options: {
-          bgColor: 'rgba(0,0,0,0.6)'
+          bgColor: 'rgba(0,0,0,0.6)',
+          zIndex: 2000
         }
       }
     ],
