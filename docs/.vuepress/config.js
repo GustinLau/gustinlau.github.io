@@ -1,9 +1,6 @@
 const nav = require('./nav')
 const { resolve } = require('path')
 
-const description = '我的个人博客，这里主要用来放一些自己的文件，自己爬过的坑以及学习过程中的一些知识的记录。'
-const logo = '/svg/star.svg'
-
 const config = {
   // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
   base: '/',
@@ -14,7 +11,7 @@ const config = {
     '/': {
       lang: 'zh-CN',
       title: '星星杂货铺',
-      description
+      description: '我的个人博客，这里主要用来放一些自己的文件，自己爬过的坑以及学习过程中的一些知识的记录。'
     }
   },
   patterns: process.env.NODE_ENV === 'production' ? ['**/*.md', '**/*.vue', '!**/*.draft.md'] : ['**/*.md', '**/*.vue'],
@@ -27,7 +24,7 @@ const config = {
     // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     sidebarDepth: 2,
     // 导航栏logo
-    logo,
+    logo: '/svg/star.svg',
     // 导航栏右侧生成Github链接
     // repo: 'gustinlau',
     // 搜索结果显示最大数
@@ -137,8 +134,8 @@ const config = {
     // 移动浏览器主题颜色
     ['meta', { name: 'theme-color', content: '#11a8cd' }],
     // Open Graph
-    ['meta', { property: 'og:image', content: logo }],
-    ['meta', { property: 'og:description', content: description }]
+    ['meta', { property: 'og:image', content: '/img/star.png' }],
+    ['meta', { property: 'og:description', content: '🎉欢迎来到我的博客🎉' }]
     // 百度统计的站长验证（你可以去掉）
     // ['meta', { name: 'baidu-site-verification', content: '7F55weZDDc' }],
     // 网站关联Google AdSense 与 html格式广告支持（你可以去掉）
