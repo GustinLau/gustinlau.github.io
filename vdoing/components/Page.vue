@@ -28,10 +28,10 @@
               {{ $frontmatter.titleTag }}
             </span>
           </h1>
-
           <Content class="theme-vdoing-content"/>
         </div>
         <PageEdit/>
+        <CopyRight v-if="!hideCopyright"/>
         <PageNav v-if="!hidePageNav" v-bind="{ sidebarItems }"/>
       </div>
 
@@ -51,7 +51,7 @@ import ArticleInfo from './ArticleInfo.vue'
 import Catalogue from './Catalogue.vue'
 import UpdateArticle from './UpdateArticle.vue'
 import RightMenu from './RightMenu.vue'
-
+import CopyRight from "./CopyRight";
 import TitleBadgeMixin from '../mixins/titleBadge'
 
 export default {
@@ -62,7 +62,7 @@ export default {
     }
   },
   props: ['sidebarItems'],
-  components: {PageEdit, PageNav, ArticleInfo, Catalogue, UpdateArticle, RightMenu},
+  components: {CopyRight, PageEdit, PageNav, ArticleInfo, Catalogue, UpdateArticle, RightMenu},
   created() {
     this.updateBarConfig = this.$themeConfig.updateBar
   },
@@ -76,6 +76,9 @@ export default {
     },
     showTitle() {
       return !this.$frontmatter.pageComponent
+    },
+    hideCopyright(){
+      return this.$frontmatter.copyright === false
     },
     linkedTitle() {
       return !!this.$frontmatter.link
