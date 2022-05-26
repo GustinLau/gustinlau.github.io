@@ -301,7 +301,12 @@ const config = {
   ],
   // markdown配置
   markdown: {
-    extractHeaders: ['h2', 'h3', 'h4', 'h5', 'h6'] // 提取标题到侧边栏的级别，默认['h2', 'h3']
+    // 提取标题到侧边栏的级别，默认['h2', 'h3'
+    extractHeaders: ['h2', 'h3', 'h4', 'h5', 'h6'],
+    plugins: {
+      // 图片尺寸插件
+      'markdown-it-imsize': {}
+    }
   },
   // 监听文件变化并重新构建
   extraWatchFiles: ['.vuepress/config.js'],

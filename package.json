@@ -24,6 +24,7 @@
     "js-yaml": "^3.13.1",
     "json2yaml": "^1.1.0",
     "lodash": "^4.17.15",
+    "markdown-it-imsize": "^2.0.1",
     "prettier": "2.6.2",
     "serve-static": "^1.15.0",
     "stylus": "^0.54.5",
