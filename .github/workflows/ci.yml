@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.15.0]
 
     steps:
       # 检出仓库
@@ -33,34 +33,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       
-      # 获取 npm 缓存目录
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      
       # 获取node_modules缓存
       - name: Cache node modules
-        id: npm-cache
+        id: cache-node-modules
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-v${matrix.node-version}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-v${matrix.node-version}-${{ env.cache-name }}-
           
-      # 缓存命中检测        
-      - if: ${{ steps.npm-cache.outputs.cache-hit == false }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
-      
-      # 安装依赖
-      - name: Install dependencies
+      # 缓存未命中则安装依赖        
+      - if: ${{ steps.cache-node-modules.outputs.cache-hit == false }}
+        name: Install dependencies
         run: npm install
       
       # 运行部署脚本
