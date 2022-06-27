@@ -16,7 +16,7 @@ export default {
       currentBadge: ''
     }
   },
-  created() {
+  beforeMount() {
     if (this.$themeConfig.titleBadgeIcons) {
       this.badges = this.$themeConfig.titleBadgeIcons
     }
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getBadge() {
-      const ratio = Math.min(window.devicePixelRatio || 1, 2) - 1
+      const ratio = Math.min(devicePixelRatio || 1, 2) - 1
       return this.badges[ratio][
         this.$page.title.split('').reduce((s, c) => s + c.charCodeAt(0), 0) % this.badges[ratio].length
       ]
