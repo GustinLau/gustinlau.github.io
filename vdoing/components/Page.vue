@@ -15,7 +15,7 @@
           <h1 v-if="showTitle">
             <img
               :src="currentBadge"
-              v-if="$themeConfig.titleBadge === false ? false : true"
+              v-if="$themeConfig.titleBadge !== false"
             />
             <span>
               {{ $page.title }}
@@ -158,8 +158,8 @@ export default {
     img
       margin-bottom -0.2rem
       margin-right 0.2rem
-      max-width 2.2rem
-      max-height 2.2rem
+      width 1.875rem
+      height 1.875rem
 
 .theme-vdoing-wrapper
   --linesColor rgba(50, 0, 0, 0.05)
