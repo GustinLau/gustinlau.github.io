@@ -72,7 +72,7 @@ export default {
       return contentBgStyle ? 'bg-style-' + contentBgStyle : ''
     },
     isShowUpdateBar() {
-      return this.updateBarConfig && this.updateBarConfig.showToArticle === false ? false : true
+      return !!(this.updateBarConfig && (this.updateBarConfig.showToArticle === false ? false : true))
     },
     showTitle() {
       return !this.$frontmatter.pageComponent
