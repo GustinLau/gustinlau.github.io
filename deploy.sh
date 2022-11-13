@@ -4,7 +4,11 @@
 set -e
 
 # 生成静态文件
-{ npm run build } || { npm run build:legacy }
+{
+  npm run build
+} || {
+  npm run build:legacy
+}
 
 
 # 进入生成的文件夹
