@@ -2,8 +2,8 @@
   "name": "blog",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
     "preview": "node ./build/preview.js",
     "deploy": "bash deploy.sh"
   },
@@ -17,6 +17,7 @@
     "@vuepress/types": "^1.9.5",
     "chalk": "^4.1.2",
     "connect": "^3.7.0",
+    "cross-env": "^7.0.3",
     "dayjs": "^1.9.7",
     "docsearch.js": "^2.5.2",
     "good-storage": "^1.1.1",
