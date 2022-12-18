@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getBadge() {
-      const ratio = Math.min(devicePixelRatio || 1, 2) - 1
+      const ratio = Math.min(Math.ceil(devicePixelRatio) || 1, 2) - 1
       return this.badges[ratio][
         this.$page.title.split('').reduce((s, c) => s + c.charCodeAt(0), 0) % this.badges[ratio].length
       ]
