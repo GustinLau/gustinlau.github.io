@@ -50,6 +50,10 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
       
+      # 增大编译内存
+      - name: Fix Memory
+        run: npm run fix-memory-limit
+      
       # 运行部署脚本
       - name: Run deploy shell
         env:
