@@ -6,7 +6,7 @@
     "dev:legacy": "vuepress dev docs",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
     "build:legacy": "vuepress build docs",
-    "fix-memory-limit": "cross-env LIMIT=4096 increase-memory-limit",
+    "fix-memory-limit": "cross-env LIMIT=2048 increase-memory-limit",
     "preview": "node ./build/preview.js",
     "deploy": "bash deploy.sh"
   },
