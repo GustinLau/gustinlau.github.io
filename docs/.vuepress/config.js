@@ -30,7 +30,7 @@ const config = {
     // 搜索结果显示最大数
     searchMaxSuggestions: 10,
     // 开启更新时间，并配置前缀文字   string | boolean (取值为git提交时间)
-    lastUpdated: '上次更新',
+    // lastUpdated: '上次更新',
     // 编辑的文件夹
     docsDir: 'docs',
     // 启用编辑
