@@ -193,16 +193,16 @@ const config = {
       }
     ],
     // "上次更新"时间格式
-    [
-      '@vuepress/last-updated',
-      {
-        transformer: (timestamp) => {
-          // https://day.js.org/
-          const dayjs = require('dayjs')
-          return dayjs(timestamp).format('YYYY/MM/DD HH:mm:ss')
-        }
-      }
-    ],
+    // [
+    //   '@vuepress/last-updated',
+    //   {
+    //     transformer: (timestamp) => {
+    //       // https://day.js.org/
+    //       const dayjs = require('dayjs')
+    //       return dayjs(timestamp).format('YYYY/MM/DD HH:mm:ss')
+    //     }
+    //   }
+    // ],
     [
       'md-enhance',
       {
