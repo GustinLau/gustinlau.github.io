@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [16.x]
 
     steps:
       # 检出仓库
@@ -51,8 +51,8 @@ jobs:
         run: npm install
       
       # 增大编译内存
-      - name: Fix Memory
-        run: npm run fix-memory-limit
+      #- name: Fix Memory
+      #  run: npm run fix-memory-limit
       
       # 运行部署脚本
       - name: Run deploy shell
